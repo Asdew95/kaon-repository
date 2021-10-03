@@ -1,0 +1,23 @@
+name="git"
+version="2.33.0"
+
+download() {
+    cd $src
+    wget -nc https://mirrors.edge.kernel.org/pub/software/scm/git/git-$version.tar.gz
+    tar xvf git-$version.tar.gz
+}
+
+build() {
+    cd $src/git-$version
+
+    ./configure --prefix=/usr \
+            --with-gitconfig=/etc/gitconfig \
+            --with-python=python3
+    make
+}
+
+package() {
+    cd $src/git-$version
+    make DESTDIR=$bin perllibdir=/usr/lib/perl5/5.34/site_perl install
+    cd $bin
+}
