@@ -1,0 +1,29 @@
+name="sudo"
+version="1.9.8p2"
+
+download() {
+    cd $src
+    wget -nc https://www.sudo.ws/dist/sudo-$version.tar.gz
+    tar xvf sudo-$version.tar.gz
+}
+
+build() {
+    cd $src/sudo-$version
+
+    ./configure --prefix=/usr              \
+            --libexecdir=/usr/lib      \
+            --with-secure-path         \
+            --with-all-insults         \
+            --with-env-editor          \
+            --docdir=/usr/share/doc/sudo-$version \
+            --with-passprompt="[sudo] password for %p: "
+
+    make
+}
+
+package() {
+    cd $src/sudo-$version
+    fakeroot make DESTDIR=$bin install
+    cd $bin
+    ln -sfv libsudo_util.so.0.0.0 usr/lib/sudo/libsudo_util.so.0
+}

@@ -1,0 +1,21 @@
+name="make"
+version="4.3"
+
+download() {
+    cd $src
+    wget -nc https://ftp.gnu.org/gnu/make/make-$version.tar.gz
+    tar xvf make-$version.tar.gz
+}
+
+build() {
+    cd $src/make-$version
+
+    ./configure --prefix=/usr
+
+    make
+}
+
+package() {
+    cd $src/make-$version
+    make DESTDIR=$bin install
+}
