@@ -4,7 +4,7 @@ version="1.2.11"
 download() {
     cd $src
     wget -nc https://zlib.net/$name-$version.tar.xz
-    tar xvf $name-$version.tar.xz
+    tar xf $name-$version.tar.xz
 }
 
 build() {

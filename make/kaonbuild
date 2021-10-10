@@ -4,7 +4,7 @@ version="4.3"
 download() {
     cd $src
     wget -nc https://ftp.gnu.org/gnu/make/make-$version.tar.gz
-    tar xvf make-$version.tar.gz
+    tar xf make-$version.tar.gz
 }
 
 build() {

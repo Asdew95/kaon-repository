@@ -1,0 +1,14 @@
+name="iana-etc"
+version="20211004"
+
+download() {
+    cd $src
+    wget -nc https://github.com/Mic92/iana-etc/releases/download/$version/$name-$version.tar.gz
+    tar xf $name-$version.tar.gz
+}
+
+package() {
+    cd $src/$name-$version
+    mkdir $bin/etc
+    cp services protocols $bin/etc/
+}

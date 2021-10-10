@@ -4,7 +4,7 @@ version="1.9.8p2"
 download() {
     cd $src
     wget -nc https://www.sudo.ws/dist/sudo-$version.tar.gz
-    tar xvf sudo-$version.tar.gz
+    tar xf sudo-$version.tar.gz
 }
 
 build() {

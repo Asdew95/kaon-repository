@@ -1,0 +1,13 @@
+name="man-pages"
+version="5.13"
+
+download() {
+    cd $src
+    wget -nc https://www.kernel.org/pub/linux/docs/man-pages/$name-$version.tar.xz
+    tar xf $name-$version.tar.xz
+}
+
+package() {
+    cd $src/$name-$version
+    make DESTDIR=$bin prefix=/usr install
+}

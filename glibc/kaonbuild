@@ -1,0 +1,33 @@
+name="glibc"
+version="2.32"
+
+download() {
+    cd $src
+    wget -nc https://ftp.gnu.org/gnu/$name/$name-$version.tar.xz
+    tar xf $name-$version.tar.xz
+}
+
+build() {
+    cd $src/$name-$version
+    mkdir build
+    cd build
+
+    #echo "rootsbindir=/usr/sbin" > configparms
+    ../configure --prefix=/usr \
+             --disable-werror \
+             --enable-kernel=3.2 \
+             --enable-stack-protector=strong \
+             --with-headers=/usr/include \
+             libc_cv_slibdir=/usr/lib
+
+    make
+}
+
+package() {
+    cd $src/$name-$version/build
+    make DESTDIR=$bin install
+    install -v -Dm644 ../nscd/nscd.tmpfiles $bin/usr/lib/tmpfiles.d/nscd.conf
+    install -v -Dm644 ../nscd/nscd.service $bin/lib/systemd/system/nscd.service
+    cp -v ../nscd/nscd.conf $bin/etc/nscd.conf
+    cp $bin/../nsswitch.conf $bin/etc/
+}
