@@ -1,0 +1,21 @@
+name="fakeroot"
+version="1.26"
+
+download() {
+    cd $src
+    wget -nc http://ftp.debian.org/debian/pool/main/f/fakeroot/${name}_$version.orig.tar.gz
+    tar xvf ${name}_$version.orig.tar.gz
+}
+
+build() {
+    cd $src/$name-$version
+
+    ./configure --prefix=/usr --libdir=/usr/lib/libfakeroot --disable-static
+    make
+}
+
+package() {
+    cd $src/$name-$version
+    make DESTDIR=$bin install
+    cd $bin
+}
